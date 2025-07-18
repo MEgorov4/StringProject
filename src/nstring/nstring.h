@@ -14,11 +14,25 @@ class String
 
   public:
     String();
+    String(const char *cstr);
     String(const String &other);
     String(String &&other);
     String &operator=(const String &);
     String &operator=(String &&);
     ~String();
+
+    size_t size() const
+    {
+        return m_size;
+    }
+    size_t capacity() const
+    {
+        return m_capacity;
+    }
+    char *cstr() const
+    {
+        return m_buffer;
+    }
 };
 } // namespace str_lib
 #endif

@@ -11,9 +11,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if (MSVC)
+  message("Setup msvc flags")
   add_compile_options(/W4 /WX)
 else()
-  message("")
+  message("Setup gcc/clang flags")
   add_compile_options(-Wall -Wpedantic -Werror)
 endif()
 
