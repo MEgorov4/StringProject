@@ -1,7 +1,11 @@
-add_subdirectory(String)
+set(MAIN_EXECUTABLE_NAME StrExample)
 
-add_executable(proj main.cpp)
+add_subdirectory(nstring)
+add_Subdirectory(tests)
+add_executable(${MAIN_EXECUTABLE_NAME} main.cpp)
 
-target_link_libraries(proj StrLib)
+target_include_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/nstring)
+target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE StrLib)
+
 
 
