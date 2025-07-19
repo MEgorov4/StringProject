@@ -12,12 +12,16 @@ class String
     size_t m_capacity;
     size_t m_size;
 
+    static constexpr size_t BASE_CAPACITY = 16;
+    static constexpr size_t EXTRA_CAPACITY = 8;
+
   public:
     String();
     String(const char *cstr);
     String(const String &other);
     String(String &&other);
     String &operator=(const String &);
+    String &operator=(const char *cstr);
     String &operator=(String &&);
     ~String();
 
