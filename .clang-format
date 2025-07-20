@@ -1,3 +1,28 @@
----
-BasedOnStyle: Microsoft
-...
+Language:        Cpp
+BasedOnStyle:    LLVM
+IndentWidth:     4
+TabWidth:        4
+UseTab:          ForIndentation
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterNamespace: false
+  AfterClass: true
+  AfterFunction: true
+  AfterStruct: true
+  AfterControlStatement: true
+  SplitEmptyNamespace: false
+  BeforeElse: true
+SpaceBeforeParens: Never
+SpacesInParentheses: true
+SpacesInAngles: true
+ColumnLimit:     120
+AllowShortFunctionsOnASingleLine: Inline
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+NamespaceIndentation: All
+DerivePointerAlignment: false
+PointerAlignment: Left
+
