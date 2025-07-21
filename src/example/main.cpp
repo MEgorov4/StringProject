@@ -7,5 +7,6 @@
 using namespace str_lib;
 int main()
 {
-	return 0;
+
+	return 1;
 }

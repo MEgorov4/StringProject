@@ -12,7 +12,7 @@ TEST( NStringCtors, defaultCtor )
 	ASSERT_EQ( str.size(), 0 );
 
 	SCOPED_TRACE( "Check capacity of empty string" );
-	ASSERT_EQ( str.capacity(), 15 );
+	ASSERT_EQ( str.capacity(), str_lib::String::base_capacity() );
 
 	SCOPED_TRACE( "Check [0] to equality null-terminant" );
 	ASSERT_EQ( str.cstr()[0], '\0' );
@@ -32,10 +32,11 @@ TEST( NStringCtors, fillCharsCtor )
 
 	str_lib::String str( 10, 'x' );
 	const char*     valid = "xxxxxxxxxx";
-	SCOPED_TRACE( "Check size of empty string" );
+
+	SCOPED_TRACE( "Check size of filled string" );
 	ASSERT_EQ( str.size(), 10 );
 
-	SCOPED_TRACE( "Check capacity of empty string" );
+	SCOPED_TRACE( "Check capacity of filled string" );
 	ASSERT_EQ( str.capacity(), 10 );
 
 	SCOPED_TRACE( "Check str.cstr == base char" );
@@ -49,7 +50,7 @@ TEST( NStringCtors, fromCstrCtor )
 	SCOPED_TRACE( "Compare base cstr to cstr colected from str_lib::String::cstr()" );
 	ASSERT_TRUE( !strcmp( str.cstr(), cstr ) );
 	ASSERT_EQ( str.size(), strlen( cstr ) );
-	ASSERT_EQ( str.capacity(), strlen( cstr ) );
+	ASSERT_EQ( str.capacity(), str_lib::String::base_capacity() );
 
 	const char*     bigCstr = "l;aksdfj;laskdl;jfjs;ladkf;jklsadljfk;jlas;kdfj;"
 	                          "lkasldj;kfklj;saldk;jf;jaslkdfasld;kfjja;slkdf";
@@ -96,7 +97,7 @@ TEST( NStringCtors, moveCtor )
 	ASSERT_EQ( str.size(), 6 );
 
 	SCOPED_TRACE( "Check capacity" );
-	ASSERT_EQ( str.capacity(), 6 );
+	ASSERT_EQ( str.capacity(), str_lib::String::base_capacity() );
 
 	str_lib::String original( "abc" );
 	str_lib::String moved( std::move( original ) );
@@ -111,7 +112,7 @@ TEST( NStringCtors, moveCtor )
 	ASSERT_EQ( moved.size(), 3 );
 
 	SCOPED_TRACE( "Check capacity" );
-	ASSERT_EQ( moved.capacity(), 3 );
+	ASSERT_EQ( moved.capacity(), str_lib::String::base_capacity() );
 }
 
 #endif

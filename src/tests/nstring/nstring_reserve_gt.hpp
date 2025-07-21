@@ -15,6 +15,17 @@ TEST( NStringReserve, reserveDoesNothingWhenCapacityIsEnough )
 	ASSERT_TRUE( !strcmp( str.cstr(), "abc" ) );
 }
 
+TEST( NStringReserve, reserveZeroDoesNothing )
+{
+	str_lib::String str    = "abc";
+	size_t          oldCap = str.capacity();
+	str.reserve( 0 );
+
+	SCOPED_TRACE( "Reserving 0 must not affect capacity or data" );
+	ASSERT_EQ( str.capacity(), oldCap );
+	ASSERT_TRUE( !strcmp( str.cstr(), "abc" ) );
+}
+
 TEST( NStringReserve, reserveIncreasesCapacity )
 {
 	str_lib::String str    = "abc";
@@ -44,4 +55,5 @@ TEST( NStringReserve, reserveThrowsOnOverflow )
 	SCOPED_TRACE( "Expect std::length_error when trying to reserve SIZE_MAX" );
 	ASSERT_THROW( str.reserve( SIZE_MAX ), std::length_error );
 }
+
 #endif // !NSTRING_RESERVE_GT_HPP

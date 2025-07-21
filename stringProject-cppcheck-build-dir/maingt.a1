@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="9948042412912501792">
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;cstdint&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;cstdint&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="4" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;stddef.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;stddef.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="5" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" line="5" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;stdexcept&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;stdexcept&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" line="6" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" line="5" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;cstddef&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;cstddef&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" line="6" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_playground_gt.hpp" line="5" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_plus_ops_gt.hpp" line="5" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_reserve_gt.hpp" line="5" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" line="4" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_shrink_to_feet_gt.hpp" line="5" column="0"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;gtest/gtest.h&quot; not found." verbose="Include file: &quot;gtest/gtest.h&quot; not found.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/tests/maingt.cpp" line="8" column="0"/>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;String&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;String&apos; has a constructor with 1 argument that is not explicit. Such, so called &quot;Converting constructors&quot;, should in general be explicit for type safety reasons as that prevents unintended implicit conversions." cwe="398" file0="C:/Users/misha/Documents/Projects/StringProject/src/tests/maingt.cpp">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="17" column="3"/>
+            <symbol>String</symbol>
+        </error>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="begin" lineNumber="40" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="begin" lineNumber="41" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="end" lineNumber="42" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="end" lineNumber="43" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="cstr" lineNumber="46" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="size" lineNumber="47" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="capacity" lineNumber="48" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="max_capacity" lineNumber="56" column="27"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="grow_coef" lineNumber="57" column="27"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="base_capacity" lineNumber="58" column="27"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" functionName="TEST" lineNumber="8" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" functionName="TEST" lineNumber="21" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" functionName="TEST" lineNumber="45" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" functionName="TEST" lineNumber="65" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" functionName="TEST" lineNumber="70" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ctors_gt.hpp" functionName="TEST" lineNumber="89" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="8" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="23" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="42" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="63" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="90" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="101" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="111" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="121" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_ops_gt.hpp" functionName="TEST" lineNumber="134" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_playground_gt.hpp" functionName="TEST" lineNumber="7" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_playground_gt.hpp" functionName="TEST" lineNumber="17" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_playground_gt.hpp" functionName="TEST" lineNumber="26" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_playground_gt.hpp" functionName="TEST" lineNumber="34" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_plus_ops_gt.hpp" functionName="TEST" lineNumber="7" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_plus_ops_gt.hpp" functionName="TEST" lineNumber="20" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_plus_ops_gt.hpp" functionName="TEST" lineNumber="32" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_reserve_gt.hpp" functionName="TEST" lineNumber="7" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_reserve_gt.hpp" functionName="TEST" lineNumber="18" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_reserve_gt.hpp" functionName="TEST" lineNumber="29" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_reserve_gt.hpp" functionName="TEST" lineNumber="40" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_reserve_gt.hpp" functionName="TEST" lineNumber="51" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="6" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="16" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="31" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="46" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="56" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="66" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="83" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_resize_gt.hpp" functionName="TEST" lineNumber="101" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_shrink_to_feet_gt.hpp" functionName="TEST" lineNumber="7" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_shrink_to_feet_gt.hpp" functionName="TEST" lineNumber="18" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_shrink_to_feet_gt.hpp" functionName="TEST" lineNumber="34" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_shrink_to_feet_gt.hpp" functionName="TEST" lineNumber="48" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/nstring/nstring_shrink_to_feet_gt.hpp" functionName="TEST" lineNumber="62" column="1"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/tests/maingt.cpp" functionName="main" lineNumber="10" column="5"/>
+    <functioncall functionName="ASSERT_EQ"/>
+    <functioncall functionName="ASSERT_GE"/>
+    <functioncall functionName="ASSERT_GT"/>
+    <functioncall functionName="ASSERT_NE"/>
+    <functioncall functionName="ASSERT_THROW"/>
+    <functioncall functionName="ASSERT_TRUE"/>
+    <functioncall functionName="InitGoogleTest"/>
+    <functioncall functionName="NStringCtors"/>
+    <functioncall functionName="NStringPlayground"/>
+    <functioncall functionName="NStringReserve"/>
+    <functioncall functionName="NStringResize"/>
+    <functioncall functionName="NStringShrinkToFit"/>
+    <functioncall functionName="RUN_ALL_TESTS"/>
+    <functioncall functionName="SCOPED_TRACE"/>
+    <functioncall functionName="SIZE_MAX"/>
+    <functioncall functionName="String"/>
+    <functioncall functionName="TEST"/>
+    <functioncall functionName="appendNullShouldThrow"/>
+    <functioncall functionName="assignFromCstr"/>
+    <functioncall functionName="assignmentFromNullShouldThrow"/>
+    <functioncall functionName="base_capacity"/>
+    <functioncall functionName="capacity"/>
+    <functioncall functionName="copyAssignment"/>
+    <functioncall functionName="copyCtor"/>
+    <functioncall functionName="cstr"/>
+    <functioncall functionName="defaultCtor"/>
+    <functioncall functionName="fillCharsCtor"/>
+    <functioncall functionName="fromCstrCtor"/>
+    <functioncall functionName="fromCstrCtorNullThrow"/>
+    <functioncall functionName="invalid_argument"/>
+    <functioncall functionName="largeResizeShouldThrow"/>
+    <functioncall functionName="length_error"/>
+    <functioncall functionName="max_capacity"/>
+    <functioncall functionName="memcmp"/>
+    <functioncall functionName="move"/>
+    <functioncall functionName="moveAssignment"/>
+    <functioncall functionName="moveCtor"/>
+    <functioncall functionName="plusEqualMultiple"/>
+    <functioncall functionName="plusEqualSelfAppend"/>
+    <functioncall functionName="plusEqualTriggersRealloc"/>
+    <functioncall functionName="plusEqualWithCstr"/>
+    <functioncall functionName="plusEqualWithString"/>
+    <functioncall functionName="plusOperatorCstrAndString"/>
+    <functioncall functionName="plusOperatorStringAndCstr"/>
+    <functioncall functionName="plusOperatorStringAndString"/>
+    <functioncall functionName="reserve"/>
+    <functioncall functionName="reserveDoesNothingWhenCapacityIsEnough"/>
+    <functioncall functionName="reserveIncreasesCapacity"/>
+    <functioncall functionName="reservePreservesData"/>
+    <functioncall functionName="reserveThrowsOnOverflow"/>
+    <functioncall functionName="reserveZeroDoesNothing"/>
+    <functioncall functionName="resize"/>
+    <functioncall functionName="resizeGrowCustomChar"/>
+    <functioncall functionName="resizeGrowDefaultChar"/>
+    <functioncall functionName="resizeGrowTriggersRealloc"/>
+    <functioncall functionName="resizeGrowWithinCapacity"/>
+    <functioncall functionName="resizeMaintainsNullTermination"/>
+    <functioncall functionName="resizeNoOp"/>
+    <functioncall functionName="resizeShrink"/>
+    <functioncall functionName="resizeToZero"/>
+    <functioncall functionName="s"/>
+    <functioncall functionName="selfAssignment"/>
+    <functioncall functionName="shrinkToFitDoesNothingWhenAlreadyTight"/>
+    <functioncall functionName="shrinkToFitEmptyString"/>
+    <functioncall functionName="shrinkToFitMultipleCalls"/>
+    <functioncall functionName="shrinkToFitPreservesContent"/>
+    <functioncall functionName="shrinkToFitReducesCapacity"/>
+    <functioncall functionName="shrink_to_fit"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="str"/>
+    <functioncall functionName="strcmp"/>
+    <functioncall functionName="strlen"/>
+    <functioncall functionName="subscriptOperator"/>
+    <functioncall functionName="true"/>
+  </FileInfo>
+</analyzerinfo>

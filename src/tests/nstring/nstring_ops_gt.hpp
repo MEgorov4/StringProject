@@ -17,7 +17,7 @@ TEST( NStringReserve, assignFromCstr )
 	ASSERT_EQ( str.size(), 5 );
 
 	SCOPED_TRACE( "Check capacity after assignment" );
-	ASSERT_EQ( str.capacity(), 5 );
+	ASSERT_EQ( str.capacity(), str_lib::String::base_capacity() );
 }
 
 TEST( NStringReserve, copyAssignment )
@@ -33,7 +33,7 @@ TEST( NStringReserve, copyAssignment )
 	ASSERT_EQ( original.size(), copyed.size() );
 
 	SCOPED_TRACE( "Check capacity equality" );
-	ASSERT_EQ( original.capacity(), copyed.capacity() );
+	ASSERT_EQ( original.capacity(), str_lib::String::base_capacity() );
 
 	SCOPED_TRACE( "Ensure deep copy (different buffers)" );
 	ASSERT_NE( original.cstr(), copyed.cstr() );
@@ -57,12 +57,12 @@ TEST( NStringReserve, moveAssignment )
 	ASSERT_EQ( moved.size(), 4 );
 
 	SCOPED_TRACE( "Check moved-to string capacity" );
-	ASSERT_EQ( moved.capacity(), 4 );
+	ASSERT_EQ( moved.capacity(), str_lib::String::base_capacity() );
 }
 
 TEST( NStringReserve, subscriptOperator )
 {
-	str_lib::String s = "abcdef";
+	str_lib::String s = { "abcdef" };
 
 	SCOPED_TRACE( "Access and verify each character by index" );
 	ASSERT_EQ( s[0], 'a' );

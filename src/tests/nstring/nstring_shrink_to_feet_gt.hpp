@@ -4,7 +4,7 @@
 #include "../../nstring/nstring.h"
 #include "gtest/gtest.h"
 
-TEST( NStringOps, shrinkToFitDoesNothingWhenAlreadyTight )
+TEST( NStringShrinkToFit, shrinkToFitDoesNothingWhenAlreadyTight )
 {
 	str_lib::String str = "abc";
 	str.shrink_to_fit();
@@ -15,11 +15,10 @@ TEST( NStringOps, shrinkToFitDoesNothingWhenAlreadyTight )
 	ASSERT_TRUE( !strcmp( str.cstr(), "abc" ) );
 }
 
-TEST( NStringOps, shrinkToFitReducesCapacity )
+TEST( NStringShrinkToFit, shrinkToFitReducesCapacity )
 {
 	str_lib::String str = "abc";
 	str.reserve( 100 );
-
 	size_t oldCap = str.capacity();
 	ASSERT_GT( oldCap, str.size() );
 
@@ -31,7 +30,7 @@ TEST( NStringOps, shrinkToFitReducesCapacity )
 	ASSERT_TRUE( !strcmp( str.cstr(), "abc" ) );
 }
 
-TEST( NStringOps, shrinkToFitPreservesContent )
+TEST( NStringShrinkToFit, shrinkToFitPreservesContent )
 {
 	str_lib::String str = "hello world!";
 	str.reserve( 200 );
@@ -44,4 +43,29 @@ TEST( NStringOps, shrinkToFitPreservesContent )
 	ASSERT_EQ( str.size(), strlen( "hello world!" ) );
 	ASSERT_EQ( str.capacity(), strlen( "hello world!" ) );
 }
+
+TEST( NStringShrinkToFit, shrinkToFitMultipleCalls )
+{
+	str_lib::String str = "lazyvim";
+	str.reserve( 64 );
+	str.shrink_to_fit();
+	str.shrink_to_fit(); // снова
+	str.shrink_to_fit(); // ещё раз
+
+	SCOPED_TRACE( "Multiple shrink_to_fit calls should be safe" );
+	ASSERT_EQ( str.size(), 7 );
+	ASSERT_EQ( str.capacity(), 7 );
+	ASSERT_TRUE( !strcmp( str.cstr(), "lazyvim" ) );
+}
+
+TEST( NStringShrinkToFit, shrinkToFitEmptyString )
+{
+	str_lib::String str;
+	str.shrink_to_fit();
+
+	SCOPED_TRACE( "shrink_to_fit on empty string should result in capacity 0 or base" );
+	ASSERT_EQ( str.size(), 0 );
+	ASSERT_TRUE( str.cstr()[0] == '\0' );
+}
+
 #endif // !NSTRING_SHRING_TO_FEET_HPP

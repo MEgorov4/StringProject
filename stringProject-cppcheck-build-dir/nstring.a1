@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="11547283380119771300">
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;cstdint&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;cstdint&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="4" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;stddef.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;stddef.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="5" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;cstdlib&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;cstdlib&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="2" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;cstring&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;cstring&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="3" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;new&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;new&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="4" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;stdexcept&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;stdexcept&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="5" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;utility&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;utility&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="6" column="0"/>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;String&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;String&apos; has a constructor with 1 argument that is not explicit. Such, so called &quot;Converting constructors&quot;, should in general be explicit for type safety reasons as that prevents unintended implicit conversions." cwe="398" file0="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="17" column="3"/>
+            <symbol>String</symbol>
+        </error>
+        <error id="shadowFunction" severity="style" msg="Local variable &apos;size&apos; shadows outer function" verbose="Local variable &apos;size&apos; shadows outer function" cwe="398" file0="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp">
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="47" column="10" info="Shadow variable"/>
+            <location file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" line="47" column="15" info="Shadowed declaration"/>
+            <symbol>size</symbol>
+        </error>
+  <FileInfo check="ctu">
+<function-call call-id="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h:17:3" call-funcname="String" call-argnr="1" file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="253" col="10" my-id="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h:75:9" my-argnr="1"/>
+  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h:73:9" my-argnr="2" my-argname="rhs" file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="242" col="32" value="0"/>
+    <unsafe-usage my-id="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h:74:9" my-argnr="2" my-argname="rhs" file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="249" col="27" value="0"/>
+    <unsafe-usage my-id="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h:75:9" my-argnr="2" my-argname="rhs" file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" line="253" col="27" value="0"/>
+  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="begin" lineNumber="40" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="begin" lineNumber="41" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="end" lineNumber="42" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="end" lineNumber="43" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="cstr" lineNumber="46" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="size" lineNumber="47" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="capacity" lineNumber="48" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="max_capacity" lineNumber="56" column="27"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="grow_coef" lineNumber="57" column="27"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.h" functionName="base_capacity" lineNumber="58" column="27"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" functionName="resize" lineNumber="154" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" functionName="ensure_capacity" lineNumber="172" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" functionName="reserve" lineNumber="200" column="15"/>
+    <functiondecl file="C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp" functionName="shrink_to_fit" lineNumber="222" column="15"/>
+    <functioncall functionName="String"/>
+    <functioncall functionName="bad_alloc"/>
+    <functioncall functionName="cstr"/>
+    <functioncall functionName="ensure_capacity"/>
+    <functioncall functionName="free"/>
+    <functioncall functionName="invalid_argument"/>
+    <functioncall functionName="length_error"/>
+    <functioncall functionName="malloc"/>
+    <functioncall functionName="memcpy"/>
+    <functioncall functionName="memset"/>
+    <functioncall functionName="move"/>
+    <functioncall functionName="realloc"/>
+    <functioncall functionName="reserve"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="strlen"/>
+    <functioncall functionName="true"/>
+  </FileInfo>
+</analyzerinfo>

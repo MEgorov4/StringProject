@@ -1,5 +1,4 @@
 #include "nstring.h"
-#include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <new>
@@ -22,7 +21,7 @@ namespace str_lib {
 
 	String::String( size_t count, char ch ) : m_capacity( count ), m_size( count )
 	{
-		if( SIZE_MAX - 1 < count )
+		if( MAX_CAPACITY < count )
 		{
 			throw std::length_error( "Max capacity overflow" );
 		}
@@ -45,9 +44,9 @@ namespace str_lib {
 		{
 			throw std::invalid_argument( "Construction from null is not valid" );
 		}
-
-		m_capacity = strlen( cstr );
-		m_size     = m_capacity;
+		size_t size = strlen( cstr );
+		m_capacity  = BASE_CAPACITY >= size ? BASE_CAPACITY : size;
+		m_size      = size;
 
 		char* buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
 		if( buffer == nullptr )
@@ -80,20 +79,30 @@ namespace str_lib {
 	{
 		if( &rhs != this )
 		{
-			char* buffer = static_cast< char* >( malloc( rhs.m_capacity + 1 ) );
-			if( buffer == nullptr )
+			if( m_capacity >= rhs.m_size )
 			{
-				throw std::bad_alloc();
+				memcpy( m_buffer, rhs.m_buffer, rhs.m_size );
+
+				m_size           = rhs.m_size;
+				m_buffer[m_size] = '\0';
 			}
+			else
+			{
+				char* buffer = static_cast< char* >( malloc( rhs.m_capacity + 1 ) );
+				if( buffer == nullptr )
+				{
+					throw std::bad_alloc();
+				}
 
-			memcpy( buffer, rhs.m_buffer, rhs.m_size );
+				memcpy( buffer, rhs.m_buffer, rhs.m_size );
 
-			free( m_buffer );
+				free( m_buffer );
 
-			m_buffer         = buffer;
-			m_capacity       = rhs.m_capacity;
-			m_size           = rhs.m_size;
-			m_buffer[m_size] = '\0';
+				m_buffer         = buffer;
+				m_capacity       = rhs.m_capacity;
+				m_size           = rhs.m_size;
+				m_buffer[m_size] = '\0';
+			}
 		}
 		return *this;
 	}
@@ -102,6 +111,7 @@ namespace str_lib {
 	{
 		if( &rhs != this )
 		{
+			free( m_buffer );
 			m_buffer       = rhs.m_buffer;
 			m_capacity     = rhs.m_capacity;
 			m_size         = rhs.m_size;
@@ -117,6 +127,7 @@ namespace str_lib {
 		if( m_buffer != cstr )
 		{
 			String newString( cstr );
+
 			*this = std::move( newString );
 		}
 
@@ -140,6 +151,15 @@ namespace str_lib {
 
 		return *this;
 	}
+	String& String::operator+=( const char* rhs )
+	{
+		if( rhs == nullptr )
+		{
+			throw std::invalid_argument( "Append with null is not valid" );
+		}
+		String temp( rhs );
+		return *this += temp;
+	};
 
 	void String::resize( size_t size, char ch )
 	{
@@ -150,16 +170,13 @@ namespace str_lib {
 
 		ensure_capacity( size );
 
-		if( m_size > size )
-		{
-			memset( m_buffer + size, ch, m_size - size );
-		}
-		else
+		if( m_size < size )
 		{
 			memset( m_buffer + m_size, ch, size - m_size );
 		}
 
-		m_size = size;
+		m_size           = size;
+		m_buffer[m_size] = '\0';
 	}
 
 	void String::ensure_capacity( size_t size )
@@ -169,21 +186,18 @@ namespace str_lib {
 			return;
 		}
 
-		if( SIZE_MAX < size )
+		if( MAX_CAPACITY < size )
 		{
 			throw std::length_error( "Max capacity overflow" );
 		}
 
-		if( SIZE_MAX / 2 < size )
+		if( MAX_CAPACITY < ( size * GROW_COEF ) )
 		{
 			throw std::length_error( "Grow capacity overflow" );
 		}
 
-		// calc increased capacity
 		size_t newCapacity = size * GROW_COEF;
-
-		// try reallocate with new capacity
-		char* newBuffer = static_cast< char* >( realloc( m_buffer, newCapacity + 1 ) );
+		char*  newBuffer   = static_cast< char* >( realloc( m_buffer, newCapacity + 1 ) );
 		if( newBuffer == nullptr )
 		{
 			throw std::bad_alloc();
@@ -200,7 +214,7 @@ namespace str_lib {
 			return;
 		}
 
-		if( SIZE_MAX <= capacity )
+		if( MAX_CAPACITY <= capacity )
 		{
 			throw std::length_error( "Max capacity overflow" );
 		}
@@ -234,18 +248,27 @@ namespace str_lib {
 
 	String operator+( const String& lhs, const String& rhs )
 	{
-		String result( lhs );
+		String result; // no SSO, just vibes :)
 		result.reserve( lhs.size() + rhs.size() );
+		result = lhs;
 		result += rhs;
 		return result;
 	}
 
 	String operator+( const String& lhs, const char* rhs )
 	{
-		return String( lhs ) += rhs;
+		String result;
+		result.reserve( lhs.size() + strlen( rhs ) );
+		result += lhs;
+		result += rhs;
+		return result;
 	}
 	String operator+( const char* lhs, const String& rhs )
 	{
-		return String( lhs ) += rhs;
+		String result;
+		result.reserve( strlen( lhs ) + rhs.size() );
+		result += lhs;
+		result += rhs;
+		return result;
 	}
 } // namespace str_lib

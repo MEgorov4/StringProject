@@ -1,0 +1,30 @@
+operator[]
+operator[]
+begin
+begin
+end
+end
+cstr
+size
+capacity
+max_capacity
+grow_coef
+base_capacity
+String call:[bad_alloc,malloc] noreturn:[bad_alloc]
+String call:[bad_alloc,length_error,malloc,memset] noreturn:[bad_alloc,length_error]
+String call:[bad_alloc,invalid_argument,malloc,memcpy,strlen] noreturn:[bad_alloc,invalid_argument]
+String
+String
+String call:[free] noreturn:[free]
+operator= call:[bad_alloc,free,malloc,memcpy] noreturn:[bad_alloc]
+operator= call:[free]
+operator= call:[move,newString] noreturn:[move]
+operator+= call:[ensure_capacity,memcpy,size,temp]
+operator+= call:[invalid_argument,temp] noreturn:[invalid_argument]
+resize call:[ensure_capacity,memset] noreturn:[memset]
+ensure_capacity call:[bad_alloc,length_error,realloc] noreturn:[bad_alloc,length_error]
+reserve call:[bad_alloc,length_error,realloc] noreturn:[bad_alloc,length_error]
+shrink_to_fit call:[bad_alloc,realloc] noreturn:[bad_alloc]
+operator+ call:[reserve,result,size]
+operator+ call:[String]
+operator+ call:[String]

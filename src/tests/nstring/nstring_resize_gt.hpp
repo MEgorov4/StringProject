@@ -62,4 +62,49 @@ TEST( NStringResize, resizeNoOp )
 	ASSERT_EQ( str.size(), 4 );
 	ASSERT_TRUE( !strcmp( str.cstr(), "test" ) );
 }
+
+TEST( NStringResize, resizeGrowWithinCapacity )
+{
+	str_lib::String str = "abc";
+	str.reserve( 10 );
+	str.resize( 6, 'x' );
+
+	SCOPED_TRACE( "Resize grow that fits within reserved capacity" );
+	ASSERT_EQ( str.size(), 6 );
+	ASSERT_EQ( str[0], 'a' );
+	ASSERT_EQ( str[1], 'b' );
+	ASSERT_EQ( str[2], 'c' );
+	ASSERT_EQ( str[3], 'x' );
+	ASSERT_EQ( str[4], 'x' );
+	ASSERT_EQ( str[5], 'x' );
+	ASSERT_TRUE( !memcmp( str.cstr(), "abcxxx", 6 ) );
+}
+
+TEST( NStringResize, resizeGrowTriggersRealloc )
+{
+	str_lib::String str          = "abc";
+	const size_t    old_capacity = str.capacity();
+	str.resize( old_capacity + 10, 'y' );
+
+	SCOPED_TRACE( "Resize grow that triggers reallocation" );
+	ASSERT_GE( str.capacity(), old_capacity + 10 );
+	ASSERT_EQ( str.size(), old_capacity + 10 );
+	ASSERT_EQ( str[0], 'a' );
+	ASSERT_EQ( str[1], 'b' );
+	ASSERT_EQ( str[2], 'c' );
+	for( size_t i = 3; i < str.size(); ++i )
+	{
+		ASSERT_EQ( str[i], 'y' );
+	}
+}
+
+TEST( NStringResize, resizeMaintainsNullTermination )
+{
+	str_lib::String str = "abc";
+	str.resize( 6, 'x' );
+
+	SCOPED_TRACE( "Check null-terminator after resize" );
+	ASSERT_EQ( str.cstr()[str.size()], '\0' );
+}
+
 #endif // !NSTRING_RESIZE_GT_HPP

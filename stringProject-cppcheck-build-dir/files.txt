@@ -1,0 +1,3 @@
+nstring.a1:::C:/Users/misha/Documents/Projects/StringProject/src/nstring/nstring.cpp
+maingt.a1:::C:/Users/misha/Documents/Projects/StringProject/src/tests/maingt.cpp
+main.a1:::C:/Users/misha/Documents/Projects/StringProject/src/example/main.cpp

@@ -4,7 +4,7 @@
 #include "../../nstring/nstring.h"
 #include "gtest/gtest.h"
 
-TEST( NStringOps, plusOperatorStringAndString )
+TEST( NStringShrinkToFit, plusOperatorStringAndString )
 {
 	str_lib::String a      = "Hello, ";
 	str_lib::String b      = "World!";
@@ -17,7 +17,7 @@ TEST( NStringOps, plusOperatorStringAndString )
 	ASSERT_EQ( result.size(), strlen( "Hello, World!" ) );
 }
 
-TEST( NStringOps, plusOperatorStringAndCstr )
+TEST( NStringShrinkToFit, plusOperatorStringAndCstr )
 {
 	str_lib::String a   = "Number: ";
 	const char*     num = "42";
@@ -29,7 +29,7 @@ TEST( NStringOps, plusOperatorStringAndCstr )
 	ASSERT_EQ( result.size(), strlen( "Number: 42" ) );
 }
 
-TEST( NStringOps, plusOperatorCstrAndString )
+TEST( NStringShrinkToFit, plusOperatorCstrAndString )
 {
 	const char*     prefix = "Value: ";
 	str_lib::String b      = "3.14";
