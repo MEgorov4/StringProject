@@ -1,6 +1,13 @@
 set(TEST_EXECUTABLE_NAME StrTests)
 
-add_executable(${TEST_EXECUTABLE_NAME} maingt.cpp nstring/nstring_ctors_gt.hpp nstring/nstring_ops_gt.hpp)
+
+file(GLOB_RECURSE TEST_EXECUTABLE_SOURCES
+${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/*.h
+${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
+)
+
+add_executable(${TEST_EXECUTABLE_NAME} ${TEST_EXECUTABLE_SOURCES})
 
 target_include_directories(${TEST_EXECUTABLE_NAME} PRIVATE  ${CMAKE_CURRENT_SOURCE_DIR}/../nstring)
 

@@ -1,4 +1,4 @@
 @echo off
 echo ===Run===
-cd build/src/ 
+cd build/src/example/
 .\StrExample.exe

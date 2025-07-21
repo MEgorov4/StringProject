@@ -1,10 +1,11 @@
-#ifndef NSTRING_OPS_GT
-#define NSTRING_OPS_GT
+#ifndef NSTRING_OPS_GT_HPP
+#define NSTRING_OPS_GT_HPP
 
 #include "../../nstring/nstring.h"
 #include "gtest/gtest.h"
+#include <cstddef>
 
-TEST( NStringOps, assignFromCstr )
+TEST( NStringReserve, assignFromCstr )
 {
 	str_lib::String str;
 	str = "hello";
@@ -19,7 +20,7 @@ TEST( NStringOps, assignFromCstr )
 	ASSERT_EQ( str.capacity(), 5 );
 }
 
-TEST( NStringOps, copyAssignment )
+TEST( NStringReserve, copyAssignment )
 {
 	str_lib::String original( "world" );
 	str_lib::String copyed;
@@ -38,15 +39,16 @@ TEST( NStringOps, copyAssignment )
 	ASSERT_NE( original.cstr(), copyed.cstr() );
 }
 
-TEST( NStringOps, moveAssignment )
+TEST( NStringReserve, moveAssignment )
 {
 	str_lib::String original( "data" );
 	str_lib::String moved;
-	const char*     movedData = moved.cstr();
-	moved                     = std::move( original );
+	moved = std::move( original );
 
 	SCOPED_TRACE( "Check moved-from string is null" );
-	ASSERT_EQ( original.cstr(), movedData );
+	ASSERT_EQ( original.cstr(), nullptr );
+	ASSERT_EQ( original.size(), 0 );
+	ASSERT_EQ( original.capacity(), 0 );
 
 	SCOPED_TRACE( "Check moved-to string content" );
 	ASSERT_TRUE( !strcmp( moved.cstr(), "data" ) );
@@ -58,7 +60,7 @@ TEST( NStringOps, moveAssignment )
 	ASSERT_EQ( moved.capacity(), 4 );
 }
 
-TEST( NStringOps, subscriptOperator )
+TEST( NStringReserve, subscriptOperator )
 {
 	str_lib::String s = "abcdef";
 
@@ -85,7 +87,7 @@ TEST( NStringOps, subscriptOperator )
 	ASSERT_EQ( constRef[3], 'd' );
 	ASSERT_EQ( constRef[4], 'e' );
 }
-TEST( NStringOps, plusEqualWithString )
+TEST( NStringReserve, plusEqualWithString )
 {
 	str_lib::String a = "abc";
 	str_lib::String b = "def";
@@ -96,7 +98,7 @@ TEST( NStringOps, plusEqualWithString )
 	ASSERT_EQ( a.size(), 6 );
 }
 
-TEST( NStringOps, plusEqualWithCstr )
+TEST( NStringReserve, plusEqualWithCstr )
 {
 	str_lib::String a = "123";
 	a += "456";
@@ -106,7 +108,7 @@ TEST( NStringOps, plusEqualWithCstr )
 	ASSERT_EQ( a.size(), 6 );
 }
 
-TEST( NStringOps, plusEqualSelfAppend )
+TEST( NStringReserve, plusEqualSelfAppend )
 {
 	str_lib::String a = "xy";
 	a += a;
@@ -116,7 +118,7 @@ TEST( NStringOps, plusEqualSelfAppend )
 	ASSERT_EQ( a.size(), 4 );
 }
 
-TEST( NStringOps, plusEqualMultiple )
+TEST( NStringReserve, plusEqualMultiple )
 {
 	str_lib::String a = "A";
 	str_lib::String b = "B";
@@ -129,7 +131,7 @@ TEST( NStringOps, plusEqualMultiple )
 	ASSERT_TRUE( !strcmp( a.cstr(), "ABC" ) );
 }
 
-TEST( NStringOps, plusEqualTriggersRealloc )
+TEST( NStringReserve, plusEqualTriggersRealloc )
 {
 	str_lib::String a       = "short";
 	const char*     longStr = "this is a very long string to trigger reallocation";

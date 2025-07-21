@@ -3,6 +3,7 @@
 
 #include "../../nstring/nstring.h"
 #include "gtest/gtest.h"
+#include <stdexcept>
 
 TEST( NStringCtors, defaultCtor )
 {
@@ -17,6 +18,29 @@ TEST( NStringCtors, defaultCtor )
 	ASSERT_EQ( str.cstr()[0], '\0' );
 }
 
+TEST( NStringCtors, fillCharsCtor )
+{
+	str_lib::String zero( 0, '\0' );
+	SCOPED_TRACE( "Check size of empty string" );
+	ASSERT_EQ( zero.size(), 0 );
+
+	SCOPED_TRACE( "Check capacity of empty string" );
+	ASSERT_EQ( zero.capacity(), 0 );
+
+	SCOPED_TRACE( "Check str.cstr == base char" );
+	ASSERT_TRUE( strcmp( zero.cstr(), "\0" ) == 0 );
+
+	str_lib::String str( 10, 'x' );
+	const char*     valid = "xxxxxxxxxx";
+	SCOPED_TRACE( "Check size of empty string" );
+	ASSERT_EQ( str.size(), 10 );
+
+	SCOPED_TRACE( "Check capacity of empty string" );
+	ASSERT_EQ( str.capacity(), 10 );
+
+	SCOPED_TRACE( "Check str.cstr == base char" );
+	ASSERT_TRUE( strcmp( str.cstr(), valid ) == 0 );
+}
 TEST( NStringCtors, fromCstrCtor )
 {
 	const char*     cstr = "abc";
@@ -35,6 +59,11 @@ TEST( NStringCtors, fromCstrCtor )
 	ASSERT_TRUE( !strcmp( bigStr.cstr(), bigCstr ) );
 	ASSERT_EQ( bigStr.size(), strlen( bigCstr ) );
 	ASSERT_EQ( bigStr.capacity(), strlen( bigCstr ) );
+}
+
+TEST( NStringCtors, fromCstrCtorNullThrow )
+{
+	ASSERT_THROW( str_lib::String str( nullptr ), std::invalid_argument );
 }
 
 TEST( NStringCtors, copyCtor )

@@ -1,5 +1,9 @@
 #include "nstring/nstring_ctors_gt.hpp"
 #include "nstring/nstring_ops_gt.hpp"
+#include "nstring/nstring_plus_ops_gt.hpp"
+#include "nstring/nstring_reserve_gt.hpp"
+#include "nstring/nstring_resize_gt.hpp"
+#include "nstring/nstring_shrink_to_feet_gt.hpp"
 
 #include "gtest/gtest.h"
 

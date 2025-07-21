@@ -1,116 +1,251 @@
 #include "nstring.h"
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <new>
+#include <stdexcept>
 #include <utility>
 
-using namespace str_lib;
+namespace str_lib {
 
-String::String() : m_capacity( BASE_CAPACITY ), m_size( 0 )
-{
-	// alloc [data-15b][null-term-1b]
-	m_buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
-	// place null-term in first place
-	m_buffer[m_size] = '\0';
-}
-
-String::String( const char* cstr ) : m_capacity( strlen( cstr ) ), m_size( m_capacity )
-{
-	// alloc [strlen(cstr)][null-term-1b]
-	m_buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
-	// copy data from cstr [strlen(cstr)] -> [m_buffer.size()][m_capacity -
-	// size][null-term]
-	memcpy( m_buffer, cstr, m_size );
-	// place null-term in last place
-	m_buffer[m_size] = '\0';
-};
-
-String::String( const String& other ) : String( other.cstr() )
-{
-	// delligate to fromCSTR constructor
-}
-
-String::String( String&& other ) noexcept
-    : m_buffer( other.m_buffer ), m_capacity( other.m_capacity ), m_size( other.m_size )
-{
-	// Cearfuly kill r-value`s data-pointer
-	other.m_buffer = nullptr;
-};
-
-String::~String()
-{
-	free( m_buffer );
-}
-
-String& String::operator=( const String& rhs )
-{
-	// check assign to yourself
-	if( &rhs != this )
+	String::String() : m_capacity( BASE_CAPACITY ), m_size( 0 )
 	{
-		// clear own-data
-		free( m_buffer );
-		// bagage capacity and size
-		m_capacity = rhs.m_capacity;
-		m_size     = rhs.m_size;
-		// alloc [newCapacity-b][null-term-1b]
-		m_buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
-		// fill copy data from rhs.m_buffer to m_buffer by new m_size
-		memcpy( m_buffer, rhs.m_buffer, m_size );
-		// place null-term in last place
+		char* buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
+		if( buffer == nullptr )
+		{
+			throw std::bad_alloc();
+		}
+
+		m_buffer         = buffer;
 		m_buffer[m_size] = '\0';
 	}
-	return *this;
-};
 
-String& String::operator=( String&& rhs ) noexcept
-{
-	// check equality yourself
-	if( &rhs != this )
+	String::String( size_t count, char ch ) : m_capacity( count ), m_size( count )
 	{
-		// swap data
-		std::swap( m_capacity, rhs.m_capacity );
-		std::swap( m_size, rhs.m_size );
-		std::swap( m_buffer, rhs.m_buffer );
-	}
-	return *this;
-};
-
-str_lib::String& str_lib::String::operator=( const char* cstr )
-{
-	// check equality yourself`s buffer and cstr
-	if( m_buffer != cstr )
-	{
-		// using fromCSTRCtor
-		String newString( cstr );
-		// using moveAssignment
-		*this = std::move( newString );
-	}
-
-	return *this;
-};
-
-str_lib::String& str_lib::String::operator+=( const String& rhs )
-{
-	// Check self increment
-	if( this == &rhs )
-	{
-		String temp( rhs );
-		return *this += temp;
-	}
-	// check actual String size + incremented String size <= capacity of this String
-	// [m_size-b][rhs.m_size-b][m_capacity - (m_size + rhs.m_size)-b]
-	if( m_size + rhs.size() > m_capacity )
-	{
-		m_capacity      = ( m_size + rhs.m_size ) * 2; // :FIXME: possible capacity overflow
-		char* newBuffer = static_cast< char* >( realloc( m_buffer, m_capacity + 1 ) );
-		if( newBuffer )
+		if( SIZE_MAX - 1 < count )
 		{
-			m_buffer = newBuffer;
+			throw std::length_error( "Max capacity overflow" );
 		}
-	}
-	// copy data from rhs.m_buffer to place after current String data ended
-	memcpy( m_buffer + m_size, rhs.m_buffer, rhs.size() );
-	m_size += rhs.size();
-	m_buffer[m_size] = '\0';
 
-	return *this;
-};
+		char* buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
+		if( buffer == nullptr )
+		{
+			throw std::bad_alloc();
+		}
+
+		memset( buffer, ch, m_size );
+
+		m_buffer         = buffer;
+		m_buffer[m_size] = '\0';
+	};
+
+	String::String( const char* cstr )
+	{
+		if( cstr == nullptr )
+		{
+			throw std::invalid_argument( "Construction from null is not valid" );
+		}
+
+		m_capacity = strlen( cstr );
+		m_size     = m_capacity;
+
+		char* buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
+		if( buffer == nullptr )
+		{
+			throw std::bad_alloc();
+		}
+
+		memcpy( buffer, cstr, m_size );
+
+		m_buffer         = buffer;
+		m_buffer[m_size] = '\0';
+	}
+
+	String::String( const String& other ) : String( other.cstr() ) {}
+
+	String::String( String&& other ) noexcept
+	    : m_buffer( other.m_buffer ), m_capacity( other.m_capacity ), m_size( other.m_size )
+	{
+		other.m_buffer   = nullptr;
+		other.m_size     = 0;
+		other.m_capacity = 0;
+	}
+
+	String::~String()
+	{
+		free( m_buffer );
+	}
+
+	String& String::operator=( const String& rhs )
+	{
+		if( &rhs != this )
+		{
+			char* buffer = static_cast< char* >( malloc( rhs.m_capacity + 1 ) );
+			if( buffer == nullptr )
+			{
+				throw std::bad_alloc();
+			}
+
+			memcpy( buffer, rhs.m_buffer, rhs.m_size );
+
+			free( m_buffer );
+
+			m_buffer         = buffer;
+			m_capacity       = rhs.m_capacity;
+			m_size           = rhs.m_size;
+			m_buffer[m_size] = '\0';
+		}
+		return *this;
+	}
+
+	String& String::operator=( String&& rhs ) noexcept
+	{
+		if( &rhs != this )
+		{
+			m_buffer       = rhs.m_buffer;
+			m_capacity     = rhs.m_capacity;
+			m_size         = rhs.m_size;
+			rhs.m_buffer   = nullptr;
+			rhs.m_capacity = 0;
+			rhs.m_size     = 0;
+		}
+		return *this;
+	}
+
+	String& String::operator=( const char* cstr )
+	{
+		if( m_buffer != cstr )
+		{
+			String newString( cstr );
+			*this = std::move( newString );
+		}
+
+		return *this;
+	}
+
+	String& String::operator+=( const String& rhs )
+	{
+		if( this == &rhs )
+		{
+			String temp( rhs );
+			return *this += temp;
+		}
+
+		ensure_capacity( m_size + rhs.size() );
+
+		memcpy( m_buffer + m_size, rhs.m_buffer, rhs.size() );
+
+		m_size += rhs.size();
+		m_buffer[m_size] = '\0';
+
+		return *this;
+	}
+
+	void String::resize( size_t size, char ch )
+	{
+		if( m_size == size )
+		{
+			return;
+		}
+
+		ensure_capacity( size );
+
+		if( m_size > size )
+		{
+			memset( m_buffer + size, ch, m_size - size );
+		}
+		else
+		{
+			memset( m_buffer + m_size, ch, size - m_size );
+		}
+
+		m_size = size;
+	}
+
+	void String::ensure_capacity( size_t size )
+	{
+		if( m_capacity >= size )
+		{
+			return;
+		}
+
+		if( SIZE_MAX < size )
+		{
+			throw std::length_error( "Max capacity overflow" );
+		}
+
+		if( SIZE_MAX / 2 < size )
+		{
+			throw std::length_error( "Grow capacity overflow" );
+		}
+
+		// calc increased capacity
+		size_t newCapacity = size * GROW_COEF;
+
+		// try reallocate with new capacity
+		char* newBuffer = static_cast< char* >( realloc( m_buffer, newCapacity + 1 ) );
+		if( newBuffer == nullptr )
+		{
+			throw std::bad_alloc();
+		}
+
+		m_buffer   = newBuffer;
+		m_capacity = newCapacity;
+	}
+
+	void String::reserve( size_t capacity )
+	{
+		if( m_capacity >= capacity )
+		{
+			return;
+		}
+
+		if( SIZE_MAX <= capacity )
+		{
+			throw std::length_error( "Max capacity overflow" );
+		}
+
+		char* buffer = static_cast< char* >( realloc( m_buffer, capacity + 1 ) );
+		if( buffer == nullptr )
+		{
+			throw std::bad_alloc();
+		}
+
+		m_buffer   = buffer;
+		m_capacity = capacity;
+	}
+
+	void String::shrink_to_fit()
+	{
+		if( m_capacity == m_size )
+		{
+			return;
+		}
+
+		char* buffer = static_cast< char* >( realloc( m_buffer, m_size + 1 ) );
+		if( buffer == nullptr )
+		{
+			throw std::bad_alloc();
+		}
+
+		m_capacity = m_size;
+		m_buffer   = buffer;
+	}
+
+	String operator+( const String& lhs, const String& rhs )
+	{
+		String result( lhs );
+		result.reserve( lhs.size() + rhs.size() );
+		result += rhs;
+		return result;
+	}
+
+	String operator+( const String& lhs, const char* rhs )
+	{
+		return String( lhs ) += rhs;
+	}
+	String operator+( const char* lhs, const String& rhs )
+	{
+		return String( lhs ) += rhs;
+	}
+} // namespace str_lib

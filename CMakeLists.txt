@@ -12,10 +12,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 if (MSVC)
     message("Setup msvc flags")
-    add_compile_options(/W4 /WX)
+    add_compile_options(/W4 /preissive /WX )
 else()
     message("Setup gcc/clang flags")
-    add_compile_options(-Wall -Wpedantic -Werror)
+    add_compile_options(-Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Woverflow -Wshadow -Werror)
 endif()
 
 # Pick packages
