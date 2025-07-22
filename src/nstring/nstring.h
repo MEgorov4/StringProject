@@ -23,8 +23,8 @@ namespace str_lib {
 		String& operator=( String&& rhs ) noexcept;
 		String& operator=( const char* cstr );
 
-		/// TODO: add r-value appendOperator
 		String& operator+=( const String& rhs );
+		String& operator+=( String&& rhs );
 		String& operator+=( const char* rhs );
 
 		/// access
@@ -109,4 +109,5 @@ namespace str_lib {
 	bool operator>=( const String& lhs, const char* rhs ) noexcept;
 	bool operator>=( const char* lhs, const String& rhs ) noexcept;
 } // namespace str_lib
+
 #endif

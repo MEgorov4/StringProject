@@ -6,7 +6,7 @@
 
 using namespace str_lib;
 
-bool reversedLexSort( const String& lhs, const String& rhs )
+bool revLexSort( const String& lhs, const String& rhs )
 {
 	for( size_t i = 0; i < std::min( lhs.size(), rhs.size() ); ++i )
 	{
@@ -19,7 +19,6 @@ bool reversedLexSort( const String& lhs, const String& rhs )
 		}
 		if( l < r )
 		{
-
 			return false;
 		}
 	}
@@ -39,7 +38,7 @@ int main()
 	}
 
 	std::cout << std::endl;
-	std::sort( lines.begin(), lines.end(), &reversedLexSort );
+	std::sort( lines.begin(), lines.end(), &revLexSort );
 
 	std::cout << "Reversed lex-sort result:" << std::endl;
 	for( auto& line : lines )

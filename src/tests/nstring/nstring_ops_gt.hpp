@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include <cstddef>
 
-TEST( NStringReserve, assignFromCstr )
+TEST( NStringOps, assignFromCstr )
 {
 	str_lib::String str;
 	str = "hello";
@@ -20,7 +20,7 @@ TEST( NStringReserve, assignFromCstr )
 	ASSERT_EQ( str.capacity(), str_lib::String::base_capacity() );
 }
 
-TEST( NStringReserve, copyAssignment )
+TEST( NStringOps, copyAssignment )
 {
 	str_lib::String original( "world" );
 	str_lib::String copyed;
@@ -39,7 +39,7 @@ TEST( NStringReserve, copyAssignment )
 	ASSERT_NE( original.cstr(), copyed.cstr() );
 }
 
-TEST( NStringReserve, moveAssignment )
+TEST( NStringOps, moveAssignment )
 {
 	str_lib::String original( "data" );
 	str_lib::String moved;
@@ -60,7 +60,7 @@ TEST( NStringReserve, moveAssignment )
 	ASSERT_EQ( moved.capacity(), str_lib::String::base_capacity() );
 }
 
-TEST( NStringReserve, subscriptOperator )
+TEST( NStringOps, subscriptOperator )
 {
 	str_lib::String s = { "abcdef" };
 
@@ -87,7 +87,8 @@ TEST( NStringReserve, subscriptOperator )
 	ASSERT_EQ( constRef[3], 'd' );
 	ASSERT_EQ( constRef[4], 'e' );
 }
-TEST( NStringReserve, plusEqualWithString )
+
+TEST( NStringOps, plusEqualWithString )
 {
 	str_lib::String a = "abc";
 	str_lib::String b = "def";
@@ -98,7 +99,7 @@ TEST( NStringReserve, plusEqualWithString )
 	ASSERT_EQ( a.size(), 6 );
 }
 
-TEST( NStringReserve, plusEqualWithCstr )
+TEST( NStringOps, plusEqualWithCstr )
 {
 	str_lib::String a = "123";
 	a += "456";
@@ -108,7 +109,7 @@ TEST( NStringReserve, plusEqualWithCstr )
 	ASSERT_EQ( a.size(), 6 );
 }
 
-TEST( NStringReserve, plusEqualSelfAppend )
+TEST( NStringOps, plusEqualSelfAppend )
 {
 	str_lib::String a = "xy";
 	a += a;
@@ -118,7 +119,7 @@ TEST( NStringReserve, plusEqualSelfAppend )
 	ASSERT_EQ( a.size(), 4 );
 }
 
-TEST( NStringReserve, plusEqualMultiple )
+TEST( NStringOps, plusEqualMultiple )
 {
 	str_lib::String a = "A";
 	str_lib::String b = "B";
@@ -131,7 +132,7 @@ TEST( NStringReserve, plusEqualMultiple )
 	ASSERT_TRUE( !strcmp( a.cstr(), "ABC" ) );
 }
 
-TEST( NStringReserve, plusEqualTriggersRealloc )
+TEST( NStringOps, plusEqualTriggersRealloc )
 {
 	str_lib::String a       = "short";
 	const char*     longStr = "this is a very long string to trigger reallocation";
@@ -148,6 +149,26 @@ TEST( NStringReserve, plusEqualTriggersRealloc )
 	SCOPED_TRACE( "Check that capacity has grown" );
 	ASSERT_GE( a.capacity(), a.size() );
 	ASSERT_GT( a.capacity(), oldCapacity );
+}
+
+TEST( NStringOps, plusEqualOperatorRvalueAppendToEmpty )
+{
+	str_lib::String a; // пустая строка
+	a += str_lib::String( "MoveMe" );
+
+	SCOPED_TRACE( "Append r-value to empty string" );
+	ASSERT_STREQ( a.cstr(), "MoveMe" );
+	ASSERT_EQ( a.size(), strlen( "MoveMe" ) );
+}
+
+TEST( NStringOps, plusEqualOperatorRvalueAppendToNonEmpty )
+{
+	str_lib::String a = "Start-";
+	a += str_lib::String( "End" );
+
+	SCOPED_TRACE( "Append r-value to non-empty string" );
+	ASSERT_STREQ( a.cstr(), "Start-End" );
+	ASSERT_EQ( a.size(), strlen( "Start-End" ) );
 }
 
 #endif

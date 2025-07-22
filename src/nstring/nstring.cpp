@@ -37,7 +37,7 @@ namespace str_lib {
 
 		m_buffer         = buffer;
 		m_buffer[m_size] = '\0';
-	};
+	}
 
 	String::String( const char* cstr )
 	{
@@ -45,9 +45,10 @@ namespace str_lib {
 		{
 			throw std::invalid_argument( "Construction from null is not valid" );
 		}
-		size_t size = strlen( cstr );
-		m_capacity  = BASE_CAPACITY >= size ? BASE_CAPACITY : size;
-		m_size      = size;
+
+		size_t cstrSize = strlen( cstr );
+		m_capacity      = BASE_CAPACITY >= cstrSize ? BASE_CAPACITY : cstrSize;
+		m_size          = cstrSize;
 
 		char* buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
 		if( buffer == nullptr )
@@ -151,7 +152,7 @@ namespace str_lib {
 			throw std::out_of_range( "index out of range" );
 		}
 		return m_buffer[index];
-	};
+	}
 
 	String& String::operator+=( const String& rhs )
 	{
@@ -170,15 +171,28 @@ namespace str_lib {
 
 		return *this;
 	}
+
+	String& String::operator+=( String&& rhs )
+	{
+		if( m_size == 0 )
+		{
+			*this = std::move( rhs );
+			return *this;
+		}
+
+		return *this += static_cast< const String& >( rhs ); // deleg to l-value op
+	}
+
 	String& String::operator+=( const char* rhs )
 	{
 		if( rhs == nullptr )
 		{
 			throw std::invalid_argument( "Append with null is not valid" );
 		}
+
 		String temp( rhs );
 		return *this += temp;
-	};
+	}
 
 	void String::resize( size_t size, char ch )
 	{
@@ -290,7 +304,7 @@ namespace str_lib {
 
 		while( in.get( ch ) && std::isspace( ch ) )
 		{
-		};
+		}
 
 		if( !in )
 			return in;
@@ -427,5 +441,5 @@ namespace str_lib {
 	bool operator>=( const char* lhs, const String& rhs ) noexcept
 	{
 		return !( lhs < rhs );
-	};
+	}
 } // namespace str_lib
