@@ -1,0 +1,16 @@
+#include "../nstring/nstring.h"
+#include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <vector>
+
+using namespace str_lib;
+int main()
+{
+	String buffer;
+
+	std::cin >> buffer;
+
+	std::cout << buffer << std::endl;
+	return 0;
+}

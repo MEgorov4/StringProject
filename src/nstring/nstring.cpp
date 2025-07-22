@@ -1,4 +1,5 @@
 #include "nstring.h"
+#include <cctype>
 #include <cstdlib>
 #include <cstring>
 #include <new>
@@ -134,6 +135,24 @@ namespace str_lib {
 		return *this;
 	}
 
+	char& String::at( size_t index )
+	{
+		if( index >= m_size )
+		{
+			throw std::out_of_range( "index out of range" );
+		}
+		return m_buffer[index];
+	}
+
+	const char& String::at( size_t index ) const
+	{
+		if( index >= m_size )
+		{
+			throw std::out_of_range( "index out of range" );
+		}
+		return m_buffer[index];
+	};
+
 	String& String::operator+=( const String& rhs )
 	{
 		if( this == &rhs )
@@ -179,24 +198,24 @@ namespace str_lib {
 		m_buffer[m_size] = '\0';
 	}
 
-	void String::ensure_capacity( size_t size )
+	void String::ensure_capacity( size_t newSize )
 	{
-		if( m_capacity >= size )
+		if( m_capacity >= newSize )
 		{
 			return;
 		}
 
-		if( MAX_CAPACITY < size )
+		if( MAX_CAPACITY < newSize )
 		{
 			throw std::length_error( "Max capacity overflow" );
 		}
 
-		if( MAX_CAPACITY < ( size * GROW_COEF ) )
+		if( MAX_CAPACITY < ( newSize * GROW_COEF ) )
 		{
 			throw std::length_error( "Grow capacity overflow" );
 		}
 
-		size_t newCapacity = size * GROW_COEF;
+		size_t newCapacity = newSize * GROW_COEF;
 		char*  newBuffer   = static_cast< char* >( realloc( m_buffer, newCapacity + 1 ) );
 		if( newBuffer == nullptr )
 		{
@@ -246,6 +265,53 @@ namespace str_lib {
 		m_buffer   = buffer;
 	}
 
+	void String::push_back( char ch )
+	{
+		ensure_capacity( m_size + 1 );
+
+		m_buffer[m_size++] = ch;
+		m_buffer[m_size]   = '\0';
+	}
+
+	void String::clear()
+	{
+		if( m_size == 0 )
+			return;
+
+		m_size           = 0;
+		m_buffer[m_size] = '\0';
+	}
+
+	std::istream& operator>>( std::istream& in, String& rhs )
+	{
+		rhs.clear();
+
+		char ch;
+
+		while( in.get( ch ) && std::isspace( ch ) )
+		{
+		};
+
+		if( !in )
+			return in;
+
+		do
+		{
+			rhs.push_back( ch );
+		} while( in.get( ch ) && !std::isspace( ch ) );
+
+		if( in && std::isspace( ch ) )
+		{
+			in.unget();
+		}
+		return in;
+	}
+
+	std::ostream& operator<<( std::ostream& out, const String& rhs ) noexcept
+	{
+		return out << rhs.cstr();
+	}
+
 	String operator+( const String& lhs, const String& rhs )
 	{
 		String result; // no SSO, just vibes :)
@@ -263,6 +329,7 @@ namespace str_lib {
 		result += rhs;
 		return result;
 	}
+
 	String operator+( const char* lhs, const String& rhs )
 	{
 		String result;
@@ -271,4 +338,94 @@ namespace str_lib {
 		result += rhs;
 		return result;
 	}
+
+	bool operator==( const String& lhs, const String& rhs ) noexcept
+	{
+		return strcmp( lhs.cstr(), rhs.cstr() ) == 0;
+	}
+
+	bool operator==( const String& lhs, const char* rhs ) noexcept
+	{
+		return strcmp( lhs.cstr(), rhs ) == 0;
+	}
+
+	bool operator==( const char* lhs, const String& rhs ) noexcept
+	{
+		return strcmp( lhs, rhs.cstr() ) == 0;
+	}
+
+	bool operator!=( const String& lhs, const String& rhs ) noexcept
+	{
+		return !( lhs == rhs );
+	}
+
+	bool operator!=( const String& lhs, const char* rhs ) noexcept
+	{
+		return !( lhs == rhs );
+	}
+
+	bool operator!=( const char* lhs, const String& rhs ) noexcept
+	{
+		return !( lhs == rhs );
+	}
+
+	bool operator<( const String& lhs, const String& rhs ) noexcept
+	{
+		return strcmp( lhs.cstr(), rhs.cstr() ) < 0;
+	}
+
+	bool operator<( const String& lhs, const char* rhs ) noexcept
+	{
+		return strcmp( lhs.cstr(), rhs ) < 0;
+	}
+
+	bool operator<( const char* lhs, const String& rhs ) noexcept
+	{
+		return strcmp( lhs, rhs.cstr() ) < 0;
+	}
+
+	bool operator<=( const String& lhs, const String& rhs ) noexcept
+	{
+		return ( lhs < rhs ) || ( lhs == rhs );
+	}
+
+	bool operator<=( const String& lhs, const char* rhs ) noexcept
+	{
+		return ( lhs < rhs ) || ( lhs == rhs );
+	}
+
+	bool operator<=( const char* lhs, const String& rhs ) noexcept
+	{
+		return ( lhs < rhs ) || ( lhs == rhs );
+	}
+
+	bool operator>( const String& lhs, const String& rhs ) noexcept
+	{
+		return !( lhs <= rhs );
+	}
+
+	bool operator>( const String& lhs, const char* rhs ) noexcept
+	{
+		return !( lhs <= rhs );
+	}
+
+	bool operator>( const char* lhs, const String& rhs ) noexcept
+	{
+		return !( lhs <= rhs );
+	}
+
+	bool operator>=( const String& lhs, const String& rhs ) noexcept
+	{
+		return !( lhs < rhs );
+	}
+
+	bool operator>=( const String& lhs, const char* rhs ) noexcept
+	{
+		return !( lhs < rhs );
+	}
+
+	bool operator>=( const char* lhs, const String& rhs ) noexcept
+	{
+		return !( lhs < rhs );
+	};
 } // namespace str_lib
