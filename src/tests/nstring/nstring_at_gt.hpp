@@ -3,6 +3,7 @@
 #include "../../nstring/nstring.h"
 #include "gtest/gtest.h"
 
+
 TEST( NStringAtMethod, validIndexAccess )
 {
 	str_lib::String str( "hello" );

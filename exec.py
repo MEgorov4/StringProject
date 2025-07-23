@@ -1,35 +1,50 @@
-import sys
-import subprocess
 import os
+import sys
+import shutil
+import subprocess
 
-BAT_DIR = os.path.join(os.path.dirname(__file__), "automation")
+BUILD_DIR = "build"
 
-flags = {
-    "-b": "build.bat",
-    "-g": "gen.bat",
-    "-r": "run.bat",
-    "-rt": "runt.bat",
-    "-c": "clear.bat"
-}
+def clear():
+    if os.path.exists(BUILD_DIR):
+        print("===> Removing build/")
+        shutil.rmtree(BUILD_DIR)
+    os.makedirs(BUILD_DIR)
+    print("===> build/ folder recreated")
 
-if len(sys.argv) < 2:
-    print(f"Usage: {sys.argv[0]} {' '.join(flags.keys())}")
-    sys.exit(1)
+def generate(with_compile_commands=False):
+    print("===> Generating CMake project into build/")
+    os.makedirs(BUILD_DIR, exist_ok=True)
 
-for arg in sys.argv[1:]:
-    bat_name = flags.get(arg)
-    if not bat_name:
-        print(f"Invalid flag: {arg}")
+    cmake_cmd = ["cmake", "-S", ".", "-B", BUILD_DIR]
+    if with_compile_commands:
+        cmake_cmd.append("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
+
+    subprocess.run(cmake_cmd, check=True)
+
+    if with_compile_commands:
+        src = os.path.join(BUILD_DIR, "compile_commands.json")
+        if os.path.exists(src):
+            shutil.copy(src, ".")
+
+def main():
+    if len(sys.argv) < 2:
+        print("Flags:")
+        print("  -g      generate cmake (no compile_commands)")
+        print("  -gcc    generate cmake with compile_commands.json")
+        print("  -c      clear build/")
         sys.exit(1)
 
-    bat_path = os.path.join(BAT_DIR, bat_name)
-    if not os.path.exists(bat_path):
-        print(f"Command file not exists: {bat_path}")
-        sys.exit(1)
+    for arg in sys.argv[1:]:
+        if arg == "-g":
+            generate(with_compile_commands=False)
+        elif arg == "-gcc":
+            generate(with_compile_commands=True)
+        elif arg == "-c":
+            clear()
+        else:
+            print(f"Unknown flag: {arg}")
+            sys.exit(1)
 
-    print(f"Running {bat_name}...")
-    result = subprocess.run([bat_path], shell=True)
-    if result.returncode != 0:
-        print(f"Command {bat_name} failed with exit code {result.returncode}")
-        sys.exit(result.returncode)
-
+if __name__ == "__main__":
+    main()

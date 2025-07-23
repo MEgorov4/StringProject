@@ -219,12 +219,12 @@ namespace str_lib {
 			return;
 		}
 
-		if( MAX_CAPACITY < newSize )
+		if( MAX_CAPACITY <= newSize )
 		{
 			throw std::length_error( "Max capacity overflow" );
 		}
 
-		if( MAX_CAPACITY < ( newSize * GROW_COEF ) )
+		if( MAX_CAPACITY <= ( newSize * GROW_COEF ) )
 		{
 			throw std::length_error( "Grow capacity overflow" );
 		}
@@ -307,7 +307,10 @@ namespace str_lib {
 		}
 
 		if( !in )
+		{
+
 			return in;
+		}
 
 		do
 		{

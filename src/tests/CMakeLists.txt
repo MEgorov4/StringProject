@@ -11,4 +11,4 @@ add_executable(${TEST_EXECUTABLE_NAME} ${TEST_EXECUTABLE_SOURCES})
 
 target_include_directories(${TEST_EXECUTABLE_NAME} PRIVATE  ${CMAKE_CURRENT_SOURCE_DIR}/../nstring)
 
-target_link_libraries(${TEST_EXECUTABLE_NAME} PRIVATE StrLib gtest::gtest)
+target_link_libraries(${TEST_EXECUTABLE_NAME} PRIVATE StrLib gtest_main)
