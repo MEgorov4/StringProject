@@ -38,6 +38,7 @@ int main()
 	}
 
 	std::cout << std::endl;
+
 	std::sort( lines.begin(), lines.end(), &revLexSort );
 
 	std::cout << "Reversed lex-sort result:" << std::endl;

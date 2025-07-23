@@ -1,14 +1,32 @@
-set(TEST_EXECUTABLE_NAME StrTests)
+include(FetchContent)
 
+FetchContent_Declare(
+      googletest
+      GIT_REPOSITORY https://github.com/google/googletest.git
+      GIT_TAG        release-1.8.1
+    )
+FetchContent_MakeAvailable(googletest)
 
-file(GLOB_RECURSE TEST_EXECUTABLE_SOURCES
-${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/*.h
-${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
-)
+if(TARGET gtest AND TARGET gtest_main)
+    message(STATUS "GoogleTest found, configuring tests")
 
-add_executable(${TEST_EXECUTABLE_NAME} ${TEST_EXECUTABLE_SOURCES})
+    set(TEST_EXECUTABLE_NAME StrTests)
 
-target_include_directories(${TEST_EXECUTABLE_NAME} PRIVATE  ${CMAKE_CURRENT_SOURCE_DIR}/../nstring)
+    file(GLOB_RECURSE TEST_EXECUTABLE_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
 
-target_link_libraries(${TEST_EXECUTABLE_NAME} PRIVATE StrLib gtest_main)
+    add_executable(${TEST_EXECUTABLE_NAME} ${TEST_EXECUTABLE_SOURCES})
+
+    target_include_directories(${TEST_EXECUTABLE_NAME}
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../nstring)
+
+    target_link_libraries(${TEST_EXECUTABLE_NAME}
+        PRIVATE NStringLib gtest_main)
+
+    enable_testing()
+    add_test(NAME ${TEST_EXECUTABLE_NAME} COMMAND ${TEST_EXECUTABLE_NAME})
+else()
+    message(WARNING "GoogleTest not available, skipping test target")
+endif()

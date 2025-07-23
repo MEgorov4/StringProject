@@ -12,8 +12,7 @@ namespace str_lib {
 	{
 		char* buffer = static_cast< char* >( malloc( m_capacity + 1 ) );
 		if( buffer == nullptr )
-		{
-			throw std::bad_alloc();
+		{ throw std::bad_alloc();
 		}
 
 		m_buffer         = buffer;
