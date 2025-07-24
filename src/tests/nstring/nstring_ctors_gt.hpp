@@ -26,7 +26,7 @@ TEST(NStringCtors, fillCharsCtor)
 	ASSERT_EQ(zero.size(), 0);
 
 	SCOPED_TRACE("Check capacity of empty string");
-	ASSERT_EQ(zero.capacity(), 0);
+	ASSERT_EQ(zero.capacity(), 15);
 
 	SCOPED_TRACE("Check str.cstr == base char");
 	ASSERT_TRUE(strcmp(zero.cstr(), "\0") == 0);
@@ -38,7 +38,7 @@ TEST(NStringCtors, fillCharsCtor)
 	ASSERT_EQ(str.size(), 10);
 
 	SCOPED_TRACE("Check capacity of filled string");
-	ASSERT_EQ(str.capacity(), 10);
+	ASSERT_EQ(str.capacity(), 15);
 
 	SCOPED_TRACE("Check str.cstr == base char");
 	ASSERT_TRUE(strcmp(str.cstr(), valid) == 0);

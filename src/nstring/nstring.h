@@ -17,7 +17,7 @@ namespace nstring {
 		String(const char* cstr);
 		String(const String& rhs);
 		String(String&& rhs) noexcept;
-		~String() noexcept;
+		~String();
 
 		/// assignment
 		String& operator=(const String& rhs);
@@ -31,12 +31,6 @@ namespace nstring {
 		char& at(size_t index);
 		const char& at(size_t index) const;
 
-		char* begin() noexcept { return m_buffer; }
-		const char* begin() const noexcept { return m_buffer; }
-
-		char* end() noexcept { return m_buffer + m_size; }
-		const char* end() const noexcept { return m_buffer + m_size; }
-
 		const char* cstr() const noexcept { return m_buffer; }
 		size_t size() const noexcept { return m_size; }
 		size_t capacity() const noexcept { return m_capacity; }
@@ -47,10 +41,10 @@ namespace nstring {
 		String& operator+=(const String& rhs);
 		String& operator+=(const char* rhs);
 
-		void swap(String& other) noexcept;
+		inline void swap(String& other) noexcept;
 		friend void swap(String& left, String& right) noexcept;
 
-		void clear();
+		void clear() noexcept;
 		void resize(size_t size, char ch = '\0');
 		void reserve(size_t capacity);
 		void shrink_to_fit();
@@ -72,39 +66,30 @@ namespace nstring {
 		size_t m_size;
 	};
 
+	inline void String::swap(String& other) noexcept
+	{
+		std::swap(m_buffer, other.m_buffer);
+		std::swap(m_capacity, other.m_capacity);
+		std::swap(m_size, other.m_size);
+	}
+
 	/// non-member functions and operators
-	void swap(String& left, String& right) noexcept;
+	inline void swap(String& left, String& right) noexcept
+	{
+		using std::swap;
+		left.swap(right);
+	};
 
 	std::istream& operator>>(std::istream& in, String& rhs);
-	std::ostream& operator<<(std::ostream& stream, const String& rhs) noexcept;
+	inline std::ostream& operator<<(std::ostream& out, const String& rhs) noexcept
+	{
+		return out << rhs.cstr();
+	};
 
 	String operator+(const String& lhs, const String& rhs);
 	String operator+(const String& lhs, const char* rhs);
 	String operator+(const char* lhs, const String& rhs);
 
-	bool operator==(const String& lhs, const String& rhs) noexcept;
-	bool operator==(const String& lhs, const char* rhs) noexcept;
-	bool operator==(const char* lhs, const String& rhs) noexcept;
-
-	bool operator!=(const String& lhs, const String& rhs) noexcept;
-	bool operator!=(const String& lhs, const char* rhs) noexcept;
-	bool operator!=(const char* lhs, const String& rhs) noexcept;
-
-	bool operator<(const String& lhs, const String& rhs) noexcept;
-	bool operator<(const String& lhs, const char* rhs) noexcept;
-	bool operator<(const char* lhs, const String& rhs) noexcept;
-
-	bool operator<=(const String& lhs, const String& rhs) noexcept;
-	bool operator<=(const String& lhs, const char* rhs) noexcept;
-	bool operator<=(const char* lhs, const String& rhs) noexcept;
-
-	bool operator>(const String& lhs, const String& rhs) noexcept;
-	bool operator>(const String& lhs, const char* rhs) noexcept;
-	bool operator>(const char* lhs, const String& rhs) noexcept;
-
-	bool operator>=(const String& lhs, const String& rhs) noexcept;
-	bool operator>=(const String& lhs, const char* rhs) noexcept;
-	bool operator>=(const char* lhs, const String& rhs) noexcept;
 }  // namespace nstring
 
 #endif

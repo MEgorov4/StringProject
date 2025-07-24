@@ -66,6 +66,7 @@ TEST(NStringShrinkToFit, shrinkToFitEmptyString)
 
 	SCOPED_TRACE("shrink_to_fit on empty string should result in capacity 0 or base");
 	ASSERT_EQ(str.size(), 0);
+	ASSERT_TRUE(str.capacity() == 0);
 	ASSERT_TRUE(str.cstr()[0] == '\0');
 }
 

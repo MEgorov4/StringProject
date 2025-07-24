@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <stdexcept>
-#include <utility>
 
 namespace nstring {
 
@@ -20,7 +19,7 @@ namespace nstring {
 		m_buffer[m_size] = '\0';
 	}
 
-	String::String(size_t count, char ch) : m_capacity(count), m_size(count)
+	String::String(size_t count, char ch) : m_capacity(std::max(count, BASE_CAPACITY)), m_size(count)
 	{
 		if (MAX_CAPACITY < count)
 		{
@@ -47,17 +46,18 @@ namespace nstring {
 		}
 
 		size_t cstrSize = strlen(cstr);
-		m_capacity = BASE_CAPACITY >= cstrSize ? BASE_CAPACITY : cstrSize;
-		m_size = cstrSize;
+		size_t calcCapacity = BASE_CAPACITY >= cstrSize ? BASE_CAPACITY : cstrSize;
 
-		char* buffer = static_cast<char*>(malloc(m_capacity + 1));
+		char* buffer = static_cast<char*>(malloc(calcCapacity + 1));
 		if (buffer == nullptr)
 		{
 			throw std::bad_alloc();
 		}
 
-		memcpy(buffer, cstr, m_size);
+		memcpy(buffer, cstr, cstrSize);
 
+		m_capacity = calcCapacity;
+		m_size = cstrSize;
 		m_buffer = buffer;
 		m_buffer[m_size] = '\0';
 	}
@@ -71,7 +71,7 @@ namespace nstring {
 		rhs.m_capacity = 0;
 	}
 
-	String::~String() noexcept
+	String::~String()
 	{
 		free(m_buffer);
 	}
@@ -97,12 +97,7 @@ namespace nstring {
 
 	String& String::operator=(const char* cstr)
 	{
-		if (cstr == nullptr)
-		{
-			throw std::invalid_argument("Construction from null is not valid");
-		}
-
-		String temp(cstr);
+		String temp = cstr;
 		swap(temp);
 
 		return *this;
@@ -130,7 +125,7 @@ namespace nstring {
 	{
 		if (this == &rhs)
 		{
-			String temp(rhs);
+			String temp = rhs;
 			return *this += temp;
 		}
 
@@ -155,15 +150,7 @@ namespace nstring {
 		return *this += temp;
 	}
 
-	void String::swap(String& other) noexcept
-	{
-		using std::swap;
-		swap(m_buffer, other.m_buffer);
-		swap(m_capacity, other.m_capacity);
-		swap(m_size, other.m_size);
-	}
-
-	void String::clear()
+	void String::clear() noexcept
 	{
 		if (m_size == 0)
 			return;
@@ -266,11 +253,6 @@ namespace nstring {
 		m_buffer[m_size] = '\0';
 	}
 
-	void swap(String& left, String& right) noexcept
-	{
-		left.swap(right);
-	}
-
 	std::istream& operator>>(std::istream& in, String& rhs)
 	{
 		rhs.clear();
@@ -295,17 +277,13 @@ namespace nstring {
 		{
 			in.unget();
 		}
-		return in;
-	}
 
-	std::ostream& operator<<(std::ostream& out, const String& rhs) noexcept
-	{
-		return out << rhs.cstr();
+		return in;
 	}
 
 	String operator+(const String& lhs, const String& rhs)
 	{
-		String result(lhs);
+		String result = lhs;
 		result.reserve(lhs.size() + rhs.size());
 		result += rhs;
 		return result;
@@ -317,7 +295,8 @@ namespace nstring {
 		{
 			throw std::invalid_argument("Plus with null is not valid");
 		}
-		String result(lhs);
+
+		String result = lhs;
 		result.reserve(lhs.size() + strlen(rhs));
 		result += rhs;
 		return result;
@@ -330,99 +309,9 @@ namespace nstring {
 			throw std::invalid_argument("Plus with null is not valid");
 		}
 
-		String result(lhs);
+		String result = lhs;
 		result.reserve(strlen(lhs) + rhs.size());
 		result += rhs;
 		return result;
-	}
-
-	bool operator==(const String& lhs, const String& rhs) noexcept
-	{
-		return strcmp(lhs.cstr(), rhs.cstr()) == 0;
-	}
-
-	bool operator==(const String& lhs, const char* rhs) noexcept
-	{
-		return strcmp(lhs.cstr(), rhs) == 0;
-	}
-
-	bool operator==(const char* lhs, const String& rhs) noexcept
-	{
-		return strcmp(lhs, rhs.cstr()) == 0;
-	}
-
-	bool operator!=(const String& lhs, const String& rhs) noexcept
-	{
-		return !(lhs == rhs);
-	}
-
-	bool operator!=(const String& lhs, const char* rhs) noexcept
-	{
-		return !(lhs == rhs);
-	}
-
-	bool operator!=(const char* lhs, const String& rhs) noexcept
-	{
-		return !(lhs == rhs);
-	}
-
-	bool operator<(const String& lhs, const String& rhs) noexcept
-	{
-		return strcmp(lhs.cstr(), rhs.cstr()) < 0;
-	}
-
-	bool operator<(const String& lhs, const char* rhs) noexcept
-	{
-		return strcmp(lhs.cstr(), rhs) < 0;
-	}
-
-	bool operator<(const char* lhs, const String& rhs) noexcept
-	{
-		return strcmp(lhs, rhs.cstr()) < 0;
-	}
-
-	bool operator<=(const String& lhs, const String& rhs) noexcept
-	{
-		return (lhs < rhs) || (lhs == rhs);
-	}
-
-	bool operator<=(const String& lhs, const char* rhs) noexcept
-	{
-		return (lhs < rhs) || (lhs == rhs);
-	}
-
-	bool operator<=(const char* lhs, const String& rhs) noexcept
-	{
-		return (lhs < rhs) || (lhs == rhs);
-	}
-
-	bool operator>(const String& lhs, const String& rhs) noexcept
-	{
-		return !(lhs <= rhs);
-	}
-
-	bool operator>(const String& lhs, const char* rhs) noexcept
-	{
-		return !(lhs <= rhs);
-	}
-
-	bool operator>(const char* lhs, const String& rhs) noexcept
-	{
-		return !(lhs <= rhs);
-	}
-
-	bool operator>=(const String& lhs, const String& rhs) noexcept
-	{
-		return !(lhs < rhs);
-	}
-
-	bool operator>=(const String& lhs, const char* rhs) noexcept
-	{
-		return !(lhs < rhs);
-	}
-
-	bool operator>=(const char* lhs, const String& rhs) noexcept
-	{
-		return !(lhs < rhs);
 	}
 }  // namespace nstring

@@ -33,7 +33,6 @@ int main()
 
 	std::vector<String> lines;
 	String buffer;
-
 	while (std::cin >> buffer)
 	{
 		lines.push_back(buffer);
