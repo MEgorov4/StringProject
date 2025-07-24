@@ -7,7 +7,7 @@
 
 using namespace nstring;
 
-bool revLexSortWithoutCase(const String& lhs, const String& rhs)
+bool sortInsens(const String& lhs, const String& rhs)
 {
 	for (size_t i = 0; i < std::min(lhs.size(), rhs.size()); ++i)
 	{
@@ -29,10 +29,11 @@ bool revLexSortWithoutCase(const String& lhs, const String& rhs)
 
 int main()
 {
-	std::cout << "Enter the worlds:" << std::endl;
+	std::cout << "Enter the words:" << std::endl;
 
 	std::vector<String> lines;
 	String buffer;
+
 	while (std::cin >> buffer)
 	{
 		lines.push_back(buffer);
@@ -40,13 +41,13 @@ int main()
 
 	std::cout << std::endl;
 
-	std::sort(lines.begin(), lines.end(), &revLexSortWithoutCase);
+	std::sort(lines.begin(), lines.end(), sortInsens);
 
-	std::cout << "Reversed lex-sort result:" << std::endl;
+	std::cout << "Reversed ilex-sort result:" << std::endl;
 
-	for (auto& line : lines)
+	for (size_t i = 0; i < lines.size(); i++)
 	{
-		std::cout << line << std::endl;
+		std::cout << lines[i] << std::endl;
 	}
 
 	return 0;

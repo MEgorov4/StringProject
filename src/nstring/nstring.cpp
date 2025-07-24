@@ -21,7 +21,7 @@ namespace nstring {
 
 	String::String(size_t count, char ch) : m_capacity(std::max(count, BASE_CAPACITY)), m_size(count)
 	{
-		if (MAX_CAPACITY < count)
+		if (MAX_CAPACITY <= count)
 		{
 			throw std::length_error("Max capacity overflow");
 		}

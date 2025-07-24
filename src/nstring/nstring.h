@@ -68,23 +68,23 @@ namespace nstring {
 
 	inline void String::swap(String& other) noexcept
 	{
-		std::swap(m_buffer, other.m_buffer);
-		std::swap(m_capacity, other.m_capacity);
-		std::swap(m_size, other.m_size);
+		using std::swap;
+		swap(m_buffer, other.m_buffer);
+		swap(m_capacity, other.m_capacity);
+		swap(m_size, other.m_size);
 	}
 
 	/// non-member functions and operators
 	inline void swap(String& left, String& right) noexcept
 	{
-		using std::swap;
 		left.swap(right);
-	};
+	}
 
 	std::istream& operator>>(std::istream& in, String& rhs);
 	inline std::ostream& operator<<(std::ostream& out, const String& rhs) noexcept
 	{
 		return out << rhs.cstr();
-	};
+	}
 
 	String operator+(const String& lhs, const String& rhs);
 	String operator+(const String& lhs, const char* rhs);
