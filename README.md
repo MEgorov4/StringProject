@@ -1,6 +1,5 @@
-## StringProject
-
 ## Description
+
 - Реализация класса динамических строк **String** на **C++11** без использования **STL**.
 
 - Программа пример принимающая на ввод список строк до конца ввода (**^Z** или **^D**).
@@ -25,9 +24,10 @@
 **GCC** / **Clang** / **MSVC**
 
 ## Quick start
+
 ```
-cmake -S . -B build 
-cmake --build build
+cmake -S . -B build       | Project files generation 
+cmake --build build       | Build
 ./build/src/example/StrExample # Пример 
 ./build/src/tests/StrTests # Тесты
 ```

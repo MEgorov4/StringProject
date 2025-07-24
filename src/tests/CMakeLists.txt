@@ -7,10 +7,11 @@ FetchContent_Declare(
     )
 FetchContent_MakeAvailable(googletest)
 
+
 if(TARGET gtest AND TARGET gtest_main)
     message(STATUS "GoogleTest found, configuring tests")
 
-    set(TEST_EXECUTABLE_NAME StrTests)
+    set(TEST_EXECUTABLE_NAME StringTests)
 
     file(GLOB_RECURSE TEST_EXECUTABLE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
@@ -23,10 +24,15 @@ if(TARGET gtest AND TARGET gtest_main)
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../nstring)
 
     target_link_libraries(${TEST_EXECUTABLE_NAME}
-        PRIVATE NStringLib gtest_main)
+        PRIVATE StringLibrary gtest_main)
 
     enable_testing()
     add_test(NAME ${TEST_EXECUTABLE_NAME} COMMAND ${TEST_EXECUTABLE_NAME})
+
+    set_property(TARGET gmock PROPERTY FOLDER "Thirdparty")
+    set_property(TARGET gmock_main PROPERTY FOLDER "Thirdparty")
+    set_property(TARGET gtest PROPERTY FOLDER "Thirdparty")
+    set_property(TARGET gtest_main PROPERTY FOLDER  "Thirdparty")
 else()
     message(WARNING "GoogleTest not available, skipping test target")
 endif()

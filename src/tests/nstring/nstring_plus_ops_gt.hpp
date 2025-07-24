@@ -1,44 +1,45 @@
 #ifndef NSTRING_PLUS_OPS_GT_HPP
 #define NSTRING_PLUS_OPS_GT_HPP
 
-#include "../../nstring/nstring.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-TEST( NStringPlusOp, plusOperatorStringAndString )
+#include "nstring.h"
+
+TEST(NStringPlusOp, plusOperatorStringAndString)
 {
-	str_lib::String a      = "Hello, ";
-	str_lib::String b      = "World!";
-	str_lib::String result = a + b;
+	nstring::String a = "Hello, ";
+	nstring::String b = "World!";
+	nstring::String result = a + b;
 
-	SCOPED_TRACE( "Check result of String + String" );
-	ASSERT_NE( strcmp( result.cstr(), "Hello, " ), 0 );
-	ASSERT_NE( strcmp( result.cstr(), "World!" ), 0 );
-	ASSERT_EQ( strcmp( result.cstr(), "Hello, World!" ), 0 );
-	ASSERT_EQ( result.size(), strlen( "Hello, World!" ) );
+	SCOPED_TRACE("Check result of String + String");
+	ASSERT_NE(strcmp(result.cstr(), "Hello, "), 0);
+	ASSERT_NE(strcmp(result.cstr(), "World!"), 0);
+	ASSERT_EQ(strcmp(result.cstr(), "Hello, World!"), 0);
+	ASSERT_EQ(result.size(), strlen("Hello, World!"));
 }
 
-TEST( NStringPlusOp, plusOperatorStringAndCstr )
+TEST(NStringPlusOp, plusOperatorStringAndCstr)
 {
-	str_lib::String a   = "Number: ";
-	const char*     num = "42";
+	nstring::String a = "Number: ";
+	const char* num = "42";
 
-	str_lib::String result = a + num;
+	nstring::String result = a + num;
 
-	SCOPED_TRACE( "Check result of String + const char*" );
-	ASSERT_TRUE( !strcmp( result.cstr(), "Number: 42" ) );
-	ASSERT_EQ( result.size(), strlen( "Number: 42" ) );
+	SCOPED_TRACE("Check result of String + const char*");
+	ASSERT_TRUE(!strcmp(result.cstr(), "Number: 42"));
+	ASSERT_EQ(result.size(), strlen("Number: 42"));
 }
 
-TEST( NStringPlusOp, plusOperatorCstrAndString )
+TEST(NStringPlusOp, plusOperatorCstrAndString)
 {
-	const char*     prefix = "Value: ";
-	str_lib::String b      = "3.14";
+	const char* prefix = "Value: ";
+	nstring::String b = "3.14";
 
-	str_lib::String result = prefix + b;
+	nstring::String result = prefix + b;
 
-	SCOPED_TRACE( "Check result of const char* + String" );
-	ASSERT_TRUE( !strcmp( result.cstr(), "Value: 3.14" ) );
-	ASSERT_EQ( result.size(), strlen( "Value: 3.14" ) );
+	SCOPED_TRACE("Check result of const char* + String");
+	ASSERT_TRUE(!strcmp(result.cstr(), "Value: 3.14"));
+	ASSERT_EQ(result.size(), strlen("Value: 3.14"));
 }
 
-#endif // !NSTRING_PLUS_OPS_GT_HPP
+#endif  // !NSTRING_PLUS_OPS_GT_HPP

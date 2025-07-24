@@ -1,28 +1,37 @@
-Language:        Cpp
-BasedOnStyle:    LLVM
-IndentWidth:     4
-TabWidth:        4
-UseTab:          ForIndentation
+---
+BasedOnStyle: Chromium
+
 BreakBeforeBraces: Custom
-BraceWrapping:
-  AfterNamespace: false
-  AfterClass: true
-  AfterFunction: true
-  AfterStruct: true
-  AfterControlStatement: true
-  SplitEmptyNamespace: false
-  BeforeElse: true
-SpaceBeforeParens: Never
-SpacesInParentheses: true
-SpacesInAngles: true
-ColumnLimit:     120
-AllowShortFunctionsOnASingleLine: Inline
-AlignConsecutiveDeclarations: true
-AlignConsecutiveAssignments: true
 AlignTrailingComments: true
-IndentAccessModifiers: false
-AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: Inline
+MaxEmptyLinesToKeep: 2
+BreakConstructorInitializersBeforeComma: true
+AllowShortLambdasOnASingleLine: false
+
+# Control of individual brace wrapping cases
+BraceWrapping:
+    AfterClass: 'true'
+    AfterControlStatement: 'true'
+    AfterEnum : 'true'
+    AfterFunction : 'true'
+    AfterNamespace : 'false'
+    AfterStruct : 'true'
+    AfterUnion : 'true'
+    BeforeCatch : 'true'
+    BeforeElse : 'true'
+    IndentBraces : 'false'
+    AfterCaseLabel : 'true'
+
+AccessModifierOffset: '-4'
+ColumnLimit: '125'
+SortIncludes: 'false'
+Standard: Cpp11
+TabWidth: '4'
+IndentWidth: '4'
+UseTab: ForIndentation
 NamespaceIndentation: All
-DerivePointerAlignment: false
-PointerAlignment: Left
+CompactNamespaces: 'true'
+
+
+...
 

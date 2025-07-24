@@ -1,4 +1,4 @@
-set(STRING_LIBRARY_NAME NStringLib)
+set(STRING_LIBRARY_NAME StringLibrary)
 
 file(GLOB_RECURSE STRING_LIBRARY_SOURCES
 ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
@@ -8,7 +8,7 @@ add_library(${STRING_LIBRARY_NAME} STATIC ${STRING_LIBRARY_SOURCES})
 
 if (MSVC)
     message(STATUS "Setup msvc flags")
-    target_compile_options(${STRING_LIBRARY_NAME} PRIVATE /W4 /preissive /WX )
+    target_compile_options(${STRING_LIBRARY_NAME} PRIVATE /W4 /WX )
 else()
     message(STATUS "Setup gcc/clang flags")
     target_compile_options(${STRING_LIBRARY_NAME} PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Woverflow -Wshadow -Werror)
